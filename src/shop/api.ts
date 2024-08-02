@@ -36,4 +36,30 @@ shop.post("/", async(c) => {
   return c.json(newShop, 201);
 });
 
+// PUT /api/shop/:id
+shop.put("/:id", async(c) => {
+  const id = c.req.param("id");
+  const param = await c.req.json<Shop>();
+  const shop = shops.find((shop) => shop.id === id);
+  if (shop) {
+    shop.name = param.name;
+    shop.description = param.description;
+    return c.json(shop);
+  } else {
+    return c.json(null, 404);
+  }
+});
+
+// DELETE /api/shop/:id
+shop.delete("/:id", async(c) => {
+  const id = c.req.param("id");
+  const shop = shops.find((shop) => shop.id === id);
+  if (shop) {
+    shops = shops.filter((shop) => shop.id !== id);
+    return c.json(shop);
+  } else {
+    return c.json(null, 404);
+  }
+});
+
 export { shop };
