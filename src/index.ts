@@ -1,9 +1,8 @@
-import { Hono } from 'hono'
+import { Hono } from "hono"
+import { shop } from "./shop/api"
 
 const app = new Hono()
 
-app.get('/', (c) => {
-  return c.text('Hello Hono!')
-})
+app.route("/api/shop", shop);
 
 export default app
